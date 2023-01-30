@@ -9,13 +9,22 @@ Demonstrate how Github Actions can be leveraged to automate CI/CD. This demo wil
 
 2. Navigate to the 'Action' tab of your fork and if needed, enable workflows to be run on this forked repository.
 
-3. Once the workflow is enabled, notice a workflow named 'Build & Deploy' on the left panel. This workflow exists because there is a deploy_build.yaml file in the .github/workflows folder
+3. Once the workflow is enabled, notice a workflow named 'Build & Deploy' on the left panel. This workflow exists because there is a `deploy_build.yaml` file in the .github/workflows folder
 
-4. Manually trigger the workflow: Click on the workflow name, select the 'Run workflow' dropdown button, confirm that branch = main, and click the green 'Run Workflow' button. deploy_build.yaml was configured such that you can trigger the workflow manually. Notice that deploy_build.yaml also configured the workflow to be trigged on push to main
+4. Manually trigger the workflow: Click on the workflow name, select the 'Run workflow' dropdown button, confirm that branch = main, and click the green 'Run Workflow' button. `deploy_build.yaml` was configured such that you can trigger the workflow manually. Notice that `deploy_build.yaml` also configured the workflow to be trigged on push to main
 
 5. Test trigger upon 'push to main' event: Clone your forked repository locally, make a minor change (such as adding your name to this README), and push to your remote. Notice that another workflow run was triggered on push and that this workflow should run to completion.
 
-6. To ensure that code that fails to build and pass pass tests never gets deployed, you can include the build and test steps as part of your code deployment protocol. In build_deploy.yaml, this is achieved by running 'mvn clean test' before 'mvn clean package'. Purposefully write a test that will fail in src/test/java/com/example/CalculatorTest.java and push that change to remote. Another workflow run should be triggered but will fail before the Jars can be packaged for deployment.
+6. To ensure that code that fails to build and pass pass tests never gets deployed, you can include the build and test steps as part of your code deployment protocol. In `build_deploy.yaml`, this is achieved by running `mvn clean test` before `mvn clean package`. Purposefully write a test that will fail in src/test/java/com/example/CalculatorTest.java and push that change to remote. Another workflow run should be triggered but will fail before the Jars can be packaged for deployment.
+
+        Example: change `calculatorInitialValueZero()` to
+        ```
+        @Test
+        public void calculatorInitialValueZero() {
+            Calculator calculator = new Calculator();
+            assertEquals(1, calculator.getValue());
+        }
+        ```
 
 7. [OPTIONAL] Github Actions and AWS: Github Actions can be used to deploy code to AWS. To demonstrate this, we will put JARS to an AWS S3 bucket where they can be deployed on Elastic Beanstalk, Elastic Container Service, etc.
 
