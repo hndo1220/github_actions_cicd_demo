@@ -22,9 +22,9 @@ jobs:
         run: |
           mvn clean test
 
-      # - name: generate jars
-      #   run: |
-      #     mvn clean package
+      - name: generate jars
+        run: |
+          mvn clean package
 
       # - name: create zip folder
       #   run: |
@@ -42,4 +42,4 @@ jobs:
 
       # - name: Upload artifacts to S3
       #   run: |
-      #     aws s3 cp dist.zip s3://bmg-q2-demo
+      #     aws s3 cp dist.zip s3://test-bucket-github-action-demo
