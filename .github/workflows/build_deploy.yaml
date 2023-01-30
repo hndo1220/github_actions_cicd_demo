@@ -26,20 +26,20 @@ jobs:
         run: |
           mvn clean package
 
-      # - name: create zip folder
-      #   run: |
-      #     mkdir dst
-      #     find . -name \*.jar -exec cp {} dst/ \;
-      #     zip -r dist.zip dst
-      #     ls
+      - name: create zip folder
+        run: |
+          mkdir dst
+          find . -name \*.jar -exec cp {} dst/ \;
+          zip -r dist.zip dst
+          ls
 
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-      #     aws-region: us-east-1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: us-east-1
 
-      # - name: Upload artifacts to S3
-      #   run: |
-      #     aws s3 cp dist.zip s3://test-bucket-github-action-demo
+      - name: Upload artifacts to S3
+        run: |
+          aws s3 cp dist.zip s3://test-bucket-github-action-demo
