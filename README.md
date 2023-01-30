@@ -30,26 +30,28 @@ Demonstrate how Github Actions can be leveraged to automate CI/CD. This demo wil
 
 8. [OPTIONAL] Github Actions and AWS: Github Actions can be used to deploy code to AWS. To demonstrate this, we will put JARS to an AWS S3 bucket where they can be deployed on Elastic Beanstalk, Elastic Container Service, etc.
 
-    a. Create a 'github-action' IAM user by following https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html, section 'Creating IAM users (console)'. Attach a Full S3 Access policy to the user. Take note of the AWS access key id and key value.
+    a. Uncomment the `Configure AWS Credentials` and `Upload artifacts to S3` sections of `build_deployment.yaml`.
 
-    b. Add credentials to Github as Github Secrets:
+    b. Create a 'github-action' IAM user by following https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html, section 'Creating IAM users (console)'. Attach a Full S3 Access policy to the user. Take note of the AWS access key id and key value.
+
+    c. Add credentials to Github as Github Secrets:
 
     - Go to your Github fork > Settings > Secrets and variables > Actions
     - Create a New Repository Secret for the Access Key ID. Name = `AWS_KEY_ID` and Secret = value copied from console.
     - Repeat the previous step for the Access Key. Name it `AWS_SECRET_ACCESS_KEY`
 
-    c. The credentials in step b are used by the `configure-aws-credentials` action in `build_deployment.yaml` workflow file. This action used to connect to AWS (https://github.com/aws-actions/configure-aws-credentials). Confirm that the name of the secrets referenced  are consistent with your secret configurations in Github. 
+    d. The credentials in step b are used by the `configure-aws-credentials` action in `build_deployment.yaml` workflow file. This action used to connect to AWS (https://github.com/aws-actions/configure-aws-credentials). Confirm that the name of the secrets referenced  are consistent with your secret configurations in Github. 
 
-    d. Create an S3 bucket -- instructions at https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html. 
+    e. Create an S3 bucket -- instructions at https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html. 
 
-    d. Update `build_deployment.yaml`:
+    f. Update `build_deployment.yaml`:
 
     - Change the `aws region` parameter used by the `configure-aws-credentials` action to reflect the region your bucket exists in.
     - Specify the bucket name used by the `aws s3 cp ...` command. If your bucket is named 'test-bucket-github-action-demo', the command should be `aws s3 cp dist.zip s3://test-bucket-github-action-demo`.
 
-    e. Commit changes and push to remote fork
+    g. Commit changes and push to remote fork
 
-8. Notice the status of the workflow run triggered by the push in step 7e. It should run to completion. Once it does, check your bucket and note that it now contains a 'dist' folder object.
+8. Notice the status of the workflow run triggered by the push in step 7g. It should run to completion. Once it does, check your bucket and note that it now contains a 'dist' folder object.
 
 
 
